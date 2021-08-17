@@ -7,6 +7,7 @@ const GitHubStrategy = require('passport-github').Strategy;
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const convertType = require('./converterType');
 
 mongoose.connect(process.env.MONGO, {
   useNewUrlParser: true,
@@ -91,7 +92,7 @@ const isAuth = async (req, res, next) => {
     res.status(401).send({ user: null });
   } else {
     const token = authHeader.split(' ')[1];
-    if (!token) {
+    if (!convertType(token)) {
       res.status(401).send({ user: null });
     } else {
       try {
@@ -135,7 +136,7 @@ app.get('/me', (req, res) => {
     res.status(401).send({ user: null });
   } else {
     const token = authHeader.split(' ')[1];
-    if (!token) {
+    if (!convertType(token)) {
       res.status(401).send({ user: null });
     } else {
       try {
