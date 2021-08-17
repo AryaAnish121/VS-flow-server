@@ -136,6 +136,8 @@ app.get('/me', (req, res) => {
     res.status(401).send({ user: null });
   } else {
     const token = authHeader.split(' ')[1];
+    console.log(typeof token, token);
+
     if (!convertType(token)) {
       res.status(401).send({ user: null });
     } else {
